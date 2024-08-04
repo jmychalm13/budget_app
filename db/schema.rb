@@ -10,9 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_04_163137) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_04_164912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "budgets", force: :cascade do |t|
+    t.string "category"
+    t.decimal "amount"
+    t.date "start_date"
+    t.date "end_date"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_budgets_on_user_id"
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.decimal "amount"
+    t.string "category"
+    t.date "date"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_expenses_on_user_id"
+  end
+
+  create_table "incomes", force: :cascade do |t|
+    t.decimal "amount"
+    t.string "source"
+    t.date "date"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_incomes_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -22,4 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_04_163137) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "budgets", "users"
+  add_foreign_key "expenses", "users"
+  add_foreign_key "incomes", "users"
 end
