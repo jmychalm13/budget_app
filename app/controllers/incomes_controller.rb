@@ -30,6 +30,12 @@ class IncomesController < ApplicationController
     render :show
   end
 
+  def destroy
+    @income = Income.find_by(id: params[:id])
+    @income.destroy
+    render json: { message: "Income destroyed successfully" }
+  end
+
   def income_params
     params.permit(:amount, :source, :date)
   end
