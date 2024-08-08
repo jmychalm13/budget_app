@@ -20,6 +20,16 @@ class IncomesController < ApplicationController
     render :show
   end
 
+  def update
+    @income = Income.find_by(id: params[:id])
+    @income.update(
+      amount: params[:amount] || @income.amount,
+      source: params[:source] || @income.source,
+      date: params[:date] || @income.date,
+    )    
+    render :show
+  end
+
   def income_params
     params.permit(:amount, :source, :date)
   end

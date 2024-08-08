@@ -41,4 +41,15 @@ class IncomesControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal ["id", "amount", "source", "date"], data.keys
   end
+
+  test "update" do
+    income = Income.first
+    patch "/incomes/#{income.id}.json", params: {
+      amount: 14.00
+    }
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal "14.0", data["amount"]
+  end
 end
