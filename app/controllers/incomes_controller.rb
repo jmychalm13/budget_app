@@ -15,6 +15,11 @@ class IncomesController < ApplicationController
     end
   end
 
+  def show
+    @income = Income.find_by(id: params[:id])
+    render :show
+  end
+
   def income_params
     params.permit(:amount, :source, :date)
   end
