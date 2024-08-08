@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   post "/sessions" => "sessions#create"
 
   resources :incomes, only: [:index, :show, :create, :update, :destroy]
+
+  resources :expenses
 end
