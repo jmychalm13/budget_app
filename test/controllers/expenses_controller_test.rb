@@ -33,4 +33,12 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
       assert_response 200
     end
   end
+
+  test "show" do
+    get "/expenses/#{Expense.first.id}.json"
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal ["id", "amount", "category", "date", "user_id"], data.keys
+  end
 end

@@ -13,4 +13,9 @@ class ExpensesController < ApplicationController
     )
     render :show
   end
+
+  def show
+    @expense = Expense.find_by(id: params[:id])
+    render :show
+  end
 end
