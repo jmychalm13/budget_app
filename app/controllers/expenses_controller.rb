@@ -33,6 +33,12 @@ class ExpensesController < ApplicationController
     end
   end
 
+  def destroy
+    @expense = Expense.find_by(id: params[:id])
+    @expense.destroy
+    render json: { message: "Expense destroyed successfully" }
+  end
+
   private
 
   def expense_params

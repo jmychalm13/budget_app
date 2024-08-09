@@ -52,4 +52,11 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal 52.0, data["amount"].to_f
   end
+
+  test "destroy" do
+    assert_difference "Expense.count", -1 do
+      delete "/expenses/#{Expense.first.id}.json"
+      assert_response 200
+    end
+  end
 end
