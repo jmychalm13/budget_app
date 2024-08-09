@@ -6,6 +6,7 @@ class IncomesController < ApplicationController
   end
 
   def create
+    pp current_user
     @income = Income.new(income_params.merge(user_id: current_user.id))
 
     if @income.save
