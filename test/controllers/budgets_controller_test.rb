@@ -35,5 +35,13 @@ class BudgetsControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
   end
+
+  test "show" do
+    get "/budgets/#{Budget.first.id}.json"
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal ["id", "user_id", "category", "amount", "start_date", "end_date"], data.keys
+  end
 end
 

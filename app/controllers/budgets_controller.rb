@@ -19,6 +19,11 @@ class BudgetsController < ApplicationController
     end
   end
 
+  def show
+    @budget = Budget.find_by(id: params[:id])
+    render :show
+  end
+
   private
 
   def budget_params
