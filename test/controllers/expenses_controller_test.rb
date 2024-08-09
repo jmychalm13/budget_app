@@ -41,4 +41,15 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal ["id", "amount", "category", "date", "user_id"], data.keys
   end
+
+  test "update" do
+    expense = Expense.first
+    patch "/expenses/#{expense.id}.json", params: {
+      expense: { amount: 52.0 }
+    }, as: :json
+    assert_response :success
+
+    data = JSON.parse(response.body)
+    assert_equal 52.0, data["amount"].to_f
+  end
 end
