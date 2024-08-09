@@ -20,4 +20,20 @@ class BudgetsControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal Budget.count, data.length
   end
+
+  test "create" do
+    assert_difference "Budget.count", 1 do
+      post "/budgets.json", params: {
+        "category": "fun money",
+        "amount": 500.00,
+        "start_date": "2024-08-01",
+        "end_date": "2024-10-01",
+        "user_id": @user.id
+      }, headers: {
+        "Authorization" => "Bearer #{@jwt}"
+      }
+      assert_response :success
+    end
+  end
 end
+
