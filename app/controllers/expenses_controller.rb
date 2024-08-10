@@ -5,14 +5,22 @@ class ExpensesController < ApplicationController
   end
 
   def create
-    @expense = Expense.create(
-      user_id: current_user.id,
-      amount: params[:amount],
-      category: params[:category],
-      date: params[:date]
-    )
-    render :show
+    @expense = Expense.new(expense_params.merge(user_id: current_user.id))
+
+    if @expense.save
+      render :show, status: :created
+    else
+      render json: @expense.errors, status: :unprocessable_entity
+    end
+    # @expense = Expense.create(
+    #   user_id: current_user.id,
+    #   amount: params[:amount],
+    #   category: params[:category],
+    #   date: params[:date]
+    # )
   end
+
+  
 
   def show
     @expense = Expense.find_by(id: params[:id])
@@ -42,6 +50,6 @@ class ExpensesController < ApplicationController
   private
 
   def expense_params
-    params.require(:expense).permit(:amount, :category, :date)
+    params.permit(:amount, :category, :date)
   end
 end

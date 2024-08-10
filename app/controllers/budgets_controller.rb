@@ -5,13 +5,7 @@ class BudgetsController < ApplicationController
   end
 
   def create
-    @budget = Budget.create(
-      user_id: current_user.id,
-      amount: params[:amount],
-      category: params[:category],
-      start_date: params[:start_date],
-      end_date: params[:end_date] 
-    )
+    @budget = Budget.new(budget_params.merge(user_id: current_user.id))
     if @budget.save
       render json: @budget, status: :created
     else
