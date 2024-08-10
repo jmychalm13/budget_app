@@ -24,9 +24,18 @@ class BudgetsController < ApplicationController
     render :show
   end
 
+  def update
+    @budget = Budget.find(params[:id])
+    if @budget.update(budget_params)
+      render :show, status: :ok
+    else
+      render json: @budget.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def budget_params
-    params.require(:expense).permit(:amount, :category, :start_date, :end_date)
+    params.permit(:amount, :category, :start_date, :end_date)
   end
 end

@@ -43,5 +43,16 @@ class BudgetsControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal ["id", "user_id", "category", "amount", "start_date", "end_date"], data.keys
   end
+
+  test "update" do
+    @budget = Budget.first
+    patch "/budgets/#{@budget.id}.json", params: {
+      "category": "bills"
+    }
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal "bills", data["category"]
+  end
 end
 
