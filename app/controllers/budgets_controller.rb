@@ -27,6 +27,12 @@ class BudgetsController < ApplicationController
     end
   end
 
+  def destroy
+    @budget = Budget.find_by(id: params[:id])
+    @budget.destroy
+    render json: { message: "Budget destroyed successfully" }
+  end
+
   private
 
   def budget_params
